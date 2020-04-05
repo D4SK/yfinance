@@ -278,10 +278,12 @@ class TickerBase():
         # get info and sustainability
         url = '%s/%s' % (self._scrape_url, self.ticker)
         data = utils.get_json(url, proxy)
-
+        
+        url = "{}/{}".format(self._scrape_url, self.ticker)
+        holders = _pd.read_html(url+'/holders')
         # holders
-        url = "{}/{}/holders".format(self._scrape_url, self.ticker)
-        holders = _pd.read_html(url)
+#         url = "{}/{}/holders".format(self._scrape_url, self.ticker)
+#         holders = _pd.read_html(url)
         self._major_holders = holders[0]
         self._institutional_holders = holders[1]
         if 'Date Reported' in self._institutional_holders:
